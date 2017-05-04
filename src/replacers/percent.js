@@ -4,7 +4,10 @@
 
 import {Dimensions} from 'react-native';
 
-const {width, height} = Dimensions.get('window');
+const actualDimensions = Dimensions.get('window');
+const width = Math.min(actualDimensions.width, actualDimensions.height);
+const height = Math.max(actualDimensions.width, actualDimensions.height);
+
 const V_PROPS = [
   'height',
   'top',
