@@ -2,11 +2,12 @@
  * Calculation of percent strings
  */
 
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 
 const actualDimensions = Dimensions.get('window');
 const width = Math.min(actualDimensions.width, actualDimensions.height);
 const height = Math.max(actualDimensions.width, actualDimensions.height);
+const ios = Platform.OS === "ios";
 
 const V_PROPS = [
   'height',
@@ -47,9 +48,9 @@ function isPercent(str) {
  * @returns {number}
  */
 function calc(str, prop) {
-  let percent = parseInt(str.substring(0, str.length - 1), 10);
+  let percent = parseFloat(str.substring(0, str.length - 1));
   let base = isVertical(prop) ? height : width;
-  return base * percent / 100;
+  return ios ? base * percent / 100 : Math.round(base * percent / 100);
 }
 
 function isVertical(prop) {
